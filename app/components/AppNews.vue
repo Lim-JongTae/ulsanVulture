@@ -11,17 +11,17 @@
               <img :src="logo" alt="" class="w-[20px] h-[20px] rounded-3xl bg-white dark:bg-gray-500" />
               <span class="notosans-font flex-ce-ce text-sm text-gray-900 font-semibold dark:text-gray-50">{{ data.name }}</span>
             </div>
-            <span class="notosans-font flex-ce-st w-full h-[48px] text-gray-950 overflow-hidden whitespace-normal text-ellipsis text-line dark:text-gray-50">{{ data.title }}</span>
+            <span class="text-center notosans-font flex-ce-st w-full h-[48px] text-gray-950 overflow-hidden whitespace-normal text-ellipsis text-line dark:text-gray-50">{{ data.title }}</span>
         </div>
         <div class="w-full h-[84px]">
-            <span class="w-full h-full text-xs text-gray-700 overflow-hidden text-ellipsis whitespace-normal text-line">
+            <span class="w-full h-full text-xs text-gray-700 overflow-hidden text-ellipsis whitespace-normal text-line text-left pl-2">
               <span class="poppins-font dark:text-gray-100">{{ data.content }}</span>
             </span>
         </div>
       </div>
       <div class="flex-ce-st w-full h-[40px] gap-2">
         <div class="flex-ce-ce">
-          <UIcon name="i-heroicons-user-group" alt="" class="w-[32px] h-[32px] rounded-3xl" />
+          <UIcon name="i-heroicons-user-group" class="w-[32px] h-[32px] rounded-3xl" />
         </div>
         <div class="flex-ce-st flex-col">
           <span class=" text-xs text-gray-900 dark:text-gray-100">{{ data.author }}</span>

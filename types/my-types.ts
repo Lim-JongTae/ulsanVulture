@@ -1,5 +1,5 @@
 export type NewsItem = {
-  id?: number | string;
+  id: number;
   title: string;
   url: string;
   name?: string;
