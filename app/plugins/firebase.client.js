@@ -7,18 +7,22 @@ import { getMessaging } from "firebase/messaging";
 
 export default defineNuxtPlugin((nuxtApp) => {  
   const {
-    apiKey,      
+    apiKey,
+    authDomain,
+    databaseURL,
+    projectId,
+    storageBucket,
     messagingSenderId,
     appId,
     measurementId
   } = useRuntimeConfig().public
-  
+
   const firebaseConfig = {
     apiKey,
-    authDomain: 'ecobest-e49b0.firebaseapp.com',
-    databaseURL: 'https://ecobest-e49b0-default-rtdb.firebaseio.com',
-    projectId: 'ecobest-e49b0',
-    storageBucket: 'ecobest-e49b0.appspot.com',
+    authDomain,
+    databaseURL,
+    projectId,
+    storageBucket,
     messagingSenderId,
     appId,
     measurementId
