@@ -24,6 +24,13 @@ export default defineNuxtConfig({
         rel: 'manifest',
         href: '/manifest.webmanifest'
       }
+    ],
+    script: [
+      {
+        async: true,
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9938049374204211',
+        crossorigin: 'anonymous'
+      }
     ]
   }
  },
