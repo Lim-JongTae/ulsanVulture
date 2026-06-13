@@ -42,7 +42,11 @@
         </div>
       </div>
       <hr>
-      <p class="copyright"><strong>&copy; {{ new Date().getFullYear() }} All Rights Reserved noksek</strong> </p>
+      <p class="copyright">
+    <strong>&copy; {{ new Date().getFullYear() }} All Rights Reserved noksek</strong>
+    &nbsp;|&nbsp;
+    <NuxtLink to="/privacy" class="privacy-link">개인정보처리방침</NuxtLink>
+  </p>
     </footer>
   </div>
 </template>
@@ -147,6 +151,13 @@ ul li .link {
  }
  .copyright {
   text-align: center;
+ }
+ .privacy-link {
+  color: #ccc;
+  text-decoration: underline;
+ }
+ .privacy-link:hover {
+  color: #fff;
  }
  .underline {
   width: 100%;
