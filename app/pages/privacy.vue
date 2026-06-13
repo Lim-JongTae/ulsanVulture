@@ -153,8 +153,9 @@ useSeoMeta({
 </script>
 
 <style scoped>
+/* ── Light mode ── */
 .privacy-wrap {
-  background-color: var(--bg-color, #fff);
+  background-color: #f8fafc;
   min-height: 100vh;
   padding: 4rem 1rem 6rem;
 }
@@ -166,9 +167,10 @@ h1 {
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #0f172a;
 }
 .last-updated {
-  color: #888;
+  color: #64748b;
   font-size: 0.95rem;
   margin-bottom: 3rem;
 }
@@ -180,12 +182,13 @@ h2 {
   font-weight: 700;
   margin-bottom: 0.8rem;
   padding-bottom: 0.4rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #cbd5e1;
+  color: #1e293b;
 }
 p, li {
   font-size: 0.95rem;
   line-height: 1.9;
-  color: #444;
+  color: #1e293b;
 }
 ul {
   padding-left: 1.4rem;
@@ -201,13 +204,15 @@ table {
   font-size: 0.9rem;
 }
 th, td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cbd5e1;
   padding: 0.6rem 0.9rem;
   text-align: left;
+  color: #1e293b;
 }
 th {
-  background-color: #f9fafb;
+  background-color: #e2e8f0;
   font-weight: 600;
+  color: #0f172a;
 }
 a {
   color: #16a34a;
@@ -215,5 +220,39 @@ a {
 }
 .back-btn {
   margin-top: 3rem;
+}
+
+/* ── Dark mode ── */
+.dark .privacy-wrap {
+  background-color: #0f172a;
+}
+.dark h1 {
+  color: #f1f5f9;
+}
+.dark .last-updated {
+  color: #94a3b8;
+}
+.dark h2 {
+  color: #e2e8f0;
+  border-bottom-color: #334155;
+}
+.dark p,
+.dark li {
+  color: #cbd5e1;
+}
+.dark th,
+.dark td {
+  border-color: #334155;
+  color: #e2e8f0;
+}
+.dark th {
+  background-color: #1e293b;
+  color: #f1f5f9;
+}
+.dark td {
+  background-color: #0f172a;
+}
+.dark a {
+  color: #4ade80;
 }
 </style>
