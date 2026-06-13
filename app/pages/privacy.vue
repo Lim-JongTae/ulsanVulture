@@ -1,6 +1,6 @@
 <template>
   <div class="privacy-wrap">
-    <div class="privacy-container">
+    <div class="privacy-container pt-10">
       <h1>개인정보처리방침</h1>
       <p class="last-updated">최종 수정일: 2026년 6월 13일</p>
 
