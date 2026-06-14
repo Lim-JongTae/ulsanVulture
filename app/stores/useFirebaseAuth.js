@@ -16,31 +16,13 @@ export const useFirebaseAuthStore = defineStore('useFirebaseAuthStore',{
    actions: {
     async register (email, password, displayName) {
       const { $auth } = useNuxtApp()
-      try {
-        const userCredential = await createUserWithEmailAndPassword($auth, email, password);
-        this.users = userCredential.user
-        await updateProfile($auth.currentUser, { displayName: displayName })                        
-        console.log('UsersStore:', this.users)
-      } catch (error) {        
-        console.log(error)
-      }
+      const userCredential = await createUserWithEmailAndPassword($auth, email, password)
+      this.users = userCredential.user
+      await updateProfile($auth.currentUser, { displayName: displayName })
     },
     async login (email, password) {
       const { $auth } = useNuxtApp()
-      try {
-        await signInWithEmailAndPassword($auth, email, password)       
-      } catch (error) {
-        console.log('Login Error',error)    
-        toast.error({
-          title: 'Error',
-          description: error.message,
-          duration: 1500,
-          callback: async ()=> {
-            navigateTo('/auth/login')
-          }
-        })
-        
-      }
+      await signInWithEmailAndPassword($auth, email, password)
     },
     async logout () {
       const { $auth } = useNuxtApp()

@@ -7,14 +7,14 @@
         <UButton class="mt-2 font-semibold text-xl" size="lg" @click="handleNotice"><img src="/logo_100.png" alt="" width="22">2026년 독수리학교 접수하기(클릭)</UButton>
       </NuxtLink> -->
      
-        <UButton 
+        <!-- <UButton 
           @click="endNotice"
           class="mt-2 font-semibold shadow-lg text-md flex flex-col items-center justify-center text-center space-y-1 mx-auto md:flex-row md:space-y-0 md:space-x-3 md:items-center md:text-left" size="lg"><img src="/logo_100.png" alt="" width="22" 
           >2026년 독수리학교 접수가 
           <span class="text-pink-500 underline font-bold animate-[blink_1s_steps(10,start)_infinite]">
               마감되었습니다.</span>
           <p>감사합니다.</p>
-        </UButton>
+        </UButton> -->
       
       <!-- <NuxtLink to="/survey" target="_blank" >
         <UButton class="mt-2 font-semibold text-xl" size="lg" @click="handleNotice"><img src="/logo_100.png" alt="" width="22">독수리학교 설문 참여</UButton>

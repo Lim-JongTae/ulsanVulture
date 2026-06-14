@@ -16,7 +16,7 @@
             <NuxtLink class="forgot-link-to" to="/auth/forgotPassword">비밀번호를 잃어버렸습니까?</NuxtLink>            
           </div>
           <UButton type="submit" size="x-large" color="#7494ec" rounded="lg" class="btn login-btn -mt-2"><span class="mx-auto">로그인</span></UButton>
-          <p v-if="errorMsg">{{ errorMsg }}</p>
+          <p v-if="errorMsg" class="error-msg">{{ errorMsg }}</p>
           <p class="text-p">울산독수리와 함께~~</p>
           <div class="social-icons">
             <NuxtLink class="link1" to="#" target="_blank"><UIcon class="input-box-icon" name="i-mdi-google"></UIcon></NuxtLink>
@@ -29,23 +29,28 @@
       <div class="form-box register" >
         <UForm class="form1" action="" @submit.prevent="handleRegSubmit">
           <h1 class="jua-font">회원가입</h1>
-          <div class="input-box">            
-            <input type="text" placeholder="userName" v-model="displayName" />                                
-            <UIcon class="input-box-icon" name="i-mdi-account-circle"></UIcon>          
-          </div>          
-          <div class="input-box">           
-            <input type="email" placeholder="E-mail" required v-model="email" />                  
-            <UIcon class="input-box-icon" name="i-mdi-email"></UIcon>           
+          <div class="input-box">
+            <input type="text" placeholder="userName" v-model="displayName" />
+            <UIcon class="input-box-icon" name="i-mdi-account-circle"></UIcon>
+            <p v-if="regErrors.displayName" class="error-msg">{{ regErrors.displayName }}</p>
           </div>
-          <div class="input-box">            
-            <input type="password" placeholder="password" v-model="password" />           
-            <UIcon class="input-box-icon" name="i-mdi-lock"></UIcon>           
+          <div class="input-box">
+            <input type="email" placeholder="E-mail" v-model="regEmail" />
+            <UIcon class="input-box-icon" name="i-mdi-email"></UIcon>
+            <p v-if="regErrors.email" class="error-msg">{{ regErrors.email }}</p>
+          </div>
+          <div class="input-box">
+            <input type="password" placeholder="password" v-model="regPassword" />
+            <UIcon class="input-box-icon" name="i-mdi-lock"></UIcon>
+            <p v-if="regErrors.password" class="error-msg">{{ regErrors.password }}</p>
           </div>
           <div class="input-box">
             <input type="password" placeholder="비밀번호 확인" v-model="repassword" />
-            <UIcon class="input-box-icon" name="i-ic-sharp-lock-person"></UIcon>                       
+            <UIcon class="input-box-icon" name="i-ic-sharp-lock-person"></UIcon>
+            <p v-if="regErrors.repassword" class="error-msg">{{ regErrors.repassword }}</p>
           </div>
           <UButton type="submit" color="#7494ec" rounded="lg" class="btn login-btn"><span class="mx-auto">회원가입</span></UButton>
+          <p v-if="regErrors.server" class="error-msg">{{ regErrors.server }}</p>
         </UForm>
       </div>    
       <div class="toggle-box">
@@ -71,58 +76,102 @@ definePageMeta({
 const toast = useToast() 
 const authStore = useFirebaseAuthStore()
 const useStore = storeToRefs(useUsersStore())
-const displayName = ref('');
-const email = ref('');
-const password = ref('');
-const repassword = ref('');
+const displayName = ref('')
+const email = ref('')
+const password = ref('')
+const repassword = ref('')
 const errorMsg = ref('')
+// 회원가입 전용 필드 (로그인 필드와 분리)
+const regEmail = ref('')
+const regPassword = ref('')
+const regErrors = ref({ displayName: '', email: '', password: '', repassword: '', server: '' })
 // const { $auth } = useNuxtApp()
-const isActive = ref(false);
+const isActive = ref(false)
 
-const handleRegSubmit = async () => { 
+const handleRegSubmit = async () => {
+  regErrors.value = { displayName: '', email: '', password: '', repassword: '', server: '' }
+  let hasError = false
+
+  if (!displayName.value) {
+    regErrors.value.displayName = '닉네임을 입력해 주세요.'
+    hasError = true
+  }
+  if (!regEmail.value) {
+    regErrors.value.email = '이메일을 입력해 주세요.'
+    hasError = true
+  }
+  if (!regPassword.value) {
+    regErrors.value.password = '비밀번호를 입력해 주세요.'
+    hasError = true
+  } else if (regPassword.value.length < 6) {
+    regErrors.value.password = '비밀번호는 6자 이상이어야 합니다.'
+    hasError = true
+  }
+  if (!repassword.value) {
+    regErrors.value.repassword = '비밀번호 확인을 입력해 주세요.'
+    hasError = true
+  } else if (regPassword.value !== repassword.value) {
+    regErrors.value.repassword = '비밀번호가 일치하지 않습니다.'
+    hasError = true
+  }
+  if (hasError) return
+
   try {
-    if (                
-      displayName.value === '' || 
-      email.value === '' || 
-      password.value === '' ) 
-      {
-      alert('빈칸을 확인해 주세요.');
-      return;
-    }
-    // console.log(displayName.value, email.value, password.value)   
-    await authStore.register(email.value, password.value, displayName.value)   
+    await authStore.register(regEmail.value, regPassword.value, displayName.value)
     toast.add({
       title: "성공적으로 회원가입 되었습니다.",
       timeout: 2000,
       callback: async () => {
         await navigateTo('/')
-    }})
-  } catch (error) {    
+      }
+    })
+  } catch (error) {
     console.log(error)
-    
-  }  
+    const code = error.code
+    if (code === 'auth/email-already-in-use') {
+      regErrors.value.email = '이미 사용 중인 이메일입니다.'
+    } else if (code === 'auth/invalid-email') {
+      regErrors.value.email = '유효하지 않은 이메일 형식입니다.'
+    } else if (code === 'auth/weak-password') {
+      regErrors.value.password = '비밀번호가 너무 약합니다. 6자 이상으로 설정해 주세요.'
+    } else if (code === 'auth/network-request-failed') {
+      regErrors.value.server = '네트워크 연결을 확인해 주세요.'
+    } else {
+      regErrors.value.server = '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.'
+    }
+  }
 }
-const handleLoginSubmit = async () => { 
+const handleLoginSubmit = async () => {
+  errorMsg.value = ''
+  if (!email.value) {
+    errorMsg.value = '이메일을 입력해 주세요.'
+    return
+  }
+  if (!password.value) {
+    errorMsg.value = '비밀번호를 입력해 주세요.'
+    return
+  }
   try {
-    if (                     
-      email === '' || 
-      password === '' 
-      ) {
-      alert('입력을 확인해 주세요.');
-      return;
-    }   
-  await authStore.login(email.value, password.value)
-  
-  toast.add({
+    await authStore.login(email.value, password.value)
+    toast.add({
       title: "로그인 중입니다...",
       timeout: 2500,
       callback: async () => {
         await navigateTo('/')
-    }})   
-}
-  catch (error) {       
+      }
+    })
+  } catch (error) {
     console.log(error)
-    errorMsg.value = error.message;
+    const code = error.code
+    if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
+      errorMsg.value = '이메일 또는 비밀번호가 올바르지 않습니다.'
+    } else if (code === 'auth/too-many-requests') {
+      errorMsg.value = '로그인 시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.'
+    } else if (code === 'auth/network-request-failed') {
+      errorMsg.value = '네트워크 연결을 확인해 주세요.'
+    } else {
+      errorMsg.value = '로그인 중 오류가 발생했습니다. 다시 시도해 주세요.'
+    }
   }
 }
 </script>
@@ -296,6 +345,11 @@ const handleLoginSubmit = async () => {
 .container1.active .toggle-panel.toggle-right {
   right: 0;
   transition-delay: 1.2s;
+}
+.error-msg {
+  color: #e53e3e;
+  font-size: 13px;
+  margin: 6px 0 0;
 }
 .toggle-panel p {
   margin-bottom: 20px;
