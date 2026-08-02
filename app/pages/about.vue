@@ -543,12 +543,17 @@ flex-direction: row-reverse;
 }
   @media screen and ( max-width:767px ) {  
     .about {
-   margin-left: -2rem; 
-  } 
-  .index-contents {
-    margin-top: -350px;  
-    height: 100%; 
-  }
+      margin-left: 0; 
+    } 
+    .gradient-content {
+      height: 100px !important;
+      margin-top: 0 !important;
+    }
+    .index-contents {
+      margin-top: -460px !important;  
+      gap: 3rem !important;
+      height: auto; 
+    }
   .bg-img1 {
     margin: auto;
   }

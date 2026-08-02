@@ -1,6 +1,9 @@
 <template>
-  <div class="blog-wrapper shadow04 no-user">
-    <div class="blog-content">
+  <div ref="wrapperRef" class="blog-wrapper shadow04 no-user relative overflow-hidden transition-all duration-700 transform scale-90 opacity-0">
+    <!-- 3D Animation Background for Hero Section -->
+    <Hero3DBackground v-if="post.welcomeScreen" />
+
+    <div class="blog-content relative z-10">
         <div class="whitespace-pre-wrap blog-title">          
             <h2 v-if="post.welcomeScreen" class="roboto-font">{{ post.title }}</h2>            
             <h2 v-else class="jua-font">{{ post.blogTitle }}</h2>
@@ -16,7 +19,7 @@
             </div>   
         </div>
     </div>
-        <div class="blog-photo">
+        <div class="blog-photo relative z-10">
           <NuxtImg class="img" v-if="post.welcomeScreen" :src="`/blogPhotos/${post.photo}.jpg`" alt="Welcome Image" />
           <NuxtImg class="img" v-else :src="`/blogPhotos/${post.blogCoverPhoto}.jpg`" alt="CoverPhoto" />                        
       </div>
@@ -28,13 +31,31 @@ const props = defineProps({
   post: Object
 })
 const { user } = useUsersStore()
+const wrapperRef = ref(null)
+
+onMounted(() => {
+  if (process.client && wrapperRef.value) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          wrapperRef.value.classList.remove('scale-90', 'opacity-0')
+          wrapperRef.value.classList.add('scale-100', 'opacity-100')
+        }
+      })
+    }, {
+      threshold: 0.1
+    })
+    observer.observe(wrapperRef.value)
+  }
+})
 </script>
 <style scoped>
 
 .blog-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;  
+  min-height: 100vh;
+  margin-top: calc(var(--header-height, 3.5rem) + 10px);
 }
 .blog-content {
   display: flex;
@@ -87,14 +108,32 @@ p {
 
 /* start media */
 @media screen and (max-width: 699px) {
+  .blog-wrapper {
+    min-height: auto !important;
+    padding: 2rem 1rem !important;
+  }
   div {
-    padding-bottom: 20px;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
   } 
+  h2 {
+    margin-bottom: 1rem !important;
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  p {
+    line-height: 1.5 !important;
+    min-height: auto !important;
+    font-size: 1rem !important;
+  }
   .blog-content {
-    @apply p-0
+    padding: 0 !important;
+    flex: auto !important;
   }
   .img {
-    @apply ml-0
+    margin-left: 0 !important;
+    max-height: 300px !important;
+    object-fit: cover !important;
   }
 }
 @media screen and (min-width: 700px) {
@@ -124,30 +163,30 @@ p {
   }
 }
 @media screen and (max-width: 600px) {  
-.blog-photo {
-    padding: 0 0;
+  .blog-photo {
+    padding: 0;
     order: 1;
-    flex: 3;
+    flex: auto;
     width: 100%;
   }
   .whitespace-pre-wrap {
-    padding: 0 0;
+    padding: 0;
   }
   .disnone {
-    padding: 0 0;;
-}
+    padding: 0;
+  }
   .blog-photo .img:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   .blog-title {
     margin-top: 0;
   }
   .blog-wrapper {
-    padding: 1.5rem 1.6rem;
-    min-height: 50%;    
+    padding: 1.5rem 1rem !important;
+    min-height: auto !important;    
   }
   .post-title {
-    font-size: 0.8rem;
+    font-size: 0.9rem !important;
   }
 }
 </style>

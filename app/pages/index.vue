@@ -36,40 +36,213 @@
         </div>
       </div>
     </div>                 
-    <div class="updates h-[300px] md:h-[250px] sm:h-[150px]">     
+    <div ref="updatesRef" class="updates h-[300px] md:h-[250px] sm:h-[150px] transition-all duration-700 transform scale-90 opacity-0">     
       <div class="container flex justify-between items-center">  
         <h2 class="jua-font">다음세대를 위한 생물다양성 보존과 생태계 복원<br><br> 시민여러분과 함께 이루어 갑니다</h2>                
-          <UButton v-if="!pEmail" trailing size="xl" to="/auth/login" icon="i-heroicons-arrow-long-right-solid" color="lime" class="router-button-1 mb-4 rounded-full text-slate-900 font-bold flex mr-10 jua-font">
+          <UButton v-if="!pEmail" trailing size="xl" to="/auth/login" icon="i-heroicons-arrow-long-right-solid" color="lime" class="router-button-1 mb-4 rounded-full text-slate-900 font-bold flex mr-10 jua-font hover:scale-110 transition-transform">
             회 원 가 입    
           </UButton>
-          <UButton v-else trailing size="xl" to="/donation" icon="i-heroicons-arrow-long-right-solid" color="lime" class="router-button-1 mb-4 rounded-full text-slate-900 font-bold flex mr-10 jua-font">
+          <UButton v-else trailing size="xl" to="/donation" icon="i-heroicons-arrow-long-right-solid" color="lime" class="router-button-1 mb-4 rounded-full text-slate-900 font-bold flex mr-10 jua-font hover:scale-110 transition-transform">
             후 원 하 기    
           </UButton>       
       </div>
     </div>
+
+    <!-- Impact & Ecological Statistics Section -->
+    <section ref="impactRef" id="impact" class="max-w-[1200px] mx-auto py-12 px-6 mb-16 transition-all duration-700 transform scale-90 opacity-0">
+      <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+        <span class="inline-block text-[13px] font-bold text-green-600 uppercase tracking-widest bg-green-500/10 px-4 py-1.5 rounded-full">Ecological Impact</span>
+        <h2 class="text-[30px] sm:text-[40px] font-bold text-gray-900 dark:text-white !h-auto !mt-0 !line-height-normal">숫자로 보는 울산 독수리 생태계</h2>
+        <p class="text-gray-700 dark:text-gray-300 text-[17px]"><strong>울산 독수리 학교는</strong> 야생동물을 보호하고, 시민 자원봉사와 생태교육을 통해 지속 가능한 생태 환경을 조성합니다.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Stat Card 1 -->
+        <div class="bg-white dark:bg-zinc-800 p-8 rounded-[32px] border border-black/10 dark:border-white/10 hover:-translate-y-2 transition-transform duration-300 shadow-md group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <UIcon name="i-heroicons-paper-airplane" class="w-7 h-7" />
+          </div>
+          <div class="text-[38px] font-extrabold text-gray-900 dark:text-white tracking-tight mb-1">3,400<span class="text-[18px] font-bold text-gray-500 ml-1">km</span></div>
+          <h4 class="text-[16px] font-bold text-gray-900 dark:text-white mb-2">몽골-울산 도해 여정</h4>
+          <p class="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">매년 11월 몽골 혜산 산맥을 떠나 태화강 변으로 이어지는 비행 거리입니다.</p>
+        </div>
+
+        <!-- Stat Card 2 -->
+        <div class="bg-white dark:bg-zinc-800 p-8 rounded-[32px] border border-black/10 dark:border-white/10 hover:-translate-y-2 transition-transform duration-300 shadow-md group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <UIcon name="i-heroicons-sparkles" class="w-7 h-7" />
+          </div>
+          <div class="text-[38px] font-extrabold text-gray-900 dark:text-white tracking-tight mb-1">450<span class="text-[18px] font-bold text-gray-500 ml-1">마리+</span></div>
+          <h4 class="text-[16px] font-bold text-gray-900 dark:text-white mb-2">최고 도래 개체 수</h4>
+          <p class="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">울주군 범서읍과 태화강 일대에서 동계 안식처를 찾는 독수리 수입니다.</p>
+        </div>
+
+        <!-- Stat Card 3 -->
+        <div class="bg-white dark:bg-zinc-800 p-8 rounded-[32px] border border-black/10 dark:border-white/10 hover:-translate-y-2 transition-transform duration-300 shadow-md group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <UIcon name="i-heroicons-heart" class="w-7 h-7" />
+          </div>
+          <div class="text-[38px] font-extrabold text-gray-900 dark:text-white tracking-tight mb-1">24<span class="text-[18px] font-bold text-gray-500 ml-1">톤+</span></div>
+          <h4 class="text-[16px] font-bold text-gray-900 dark:text-white mb-2">연간 친환경 먹이 공급</h4>
+          <p class="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">탈진을 방지하고 겨울을 무사히 보낼 수 있도록 안전한 멸균 축산 부산물을 제공합니다.</p>
+        </div>
+
+        <!-- Stat Card 4 -->
+        <div class="bg-white dark:bg-zinc-800 p-8 rounded-[32px] border border-black/10 dark:border-white/10 hover:-translate-y-2 transition-transform duration-300 shadow-md group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <UIcon name="i-heroicons-user-group" class="w-7 h-7" />
+          </div>
+          <div class="text-[38px] font-extrabold text-gray-900 dark:text-white tracking-tight mb-1">6<span class="text-[18px] font-bold text-gray-500 ml-1">년</span></div>
+          <h4 class="text-[16px] font-bold text-gray-900 dark:text-white mb-2">시민 수호대 먹이주기 & 생태교육</h4>
+          <p class="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">2020년부터 몽골에서 날아온 독수리들에게 안전한 먹거리를 제공하며, 어린이와 학부모를 위한 생태교육도 함께 진행하고 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinereous Vulture Interactive Guide (독수리 생태 백과) -->
+    <section ref="anatomyRef" id="anatomy" class="max-w-[1200px] mx-auto py-12 px-6 mb-20 transition-all duration-700 transform scale-90 opacity-0">
+      <div class="bg-white dark:bg-zinc-800 rounded-[32px] border border-black/10 dark:border-white/10 p-8 sm:p-14 overflow-hidden relative shadow-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Left Text Content -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-block bg-[#09090b] text-white dark:bg-amber-400 dark:text-slate-900 text-[12px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">SPECIES SPECS</div>
+            <h3 class="text-[30px] sm:text-[40px] font-bold text-gray-900 dark:text-white leading-tight !h-auto !mt-0">
+              자연의 청소부,<br/>
+              <span class="text-amber-500">독수리(Cinereous Vulture)</span> 생태백과
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 text-[15px] leading-relaxed">
+              독수리(<em>Aegypius monachus</em>)는 독수리목 수리과의 대형 사체 먹이 조류입니다. 흔히 말하는 공격적인 수리(Eagle)와 달리 사냥을 하지 않고 사체만을 먹어 질병 확산을 막는 생태계의 소중한 파수꾼입니다.
+            </p>
+
+            <!-- Interactive Accordion / Feature List -->
+            <div class="space-y-3 pt-2">
+              <div 
+                v-for="(acc, index) in accordions" 
+                :key="index"
+                @click="toggleAccordion(index)"
+                class="group border border-gray-200 dark:border-zinc-700 rounded-2xl p-4 bg-zinc-50 dark:bg-zinc-900/60 cursor-pointer hover:bg-slate-900 dark:hover:bg-white transition-all duration-300"
+              >
+                <div class="flex justify-between items-center font-bold text-gray-900 dark:text-white text-[15px] group-hover:!text-white dark:group-hover:!text-slate-900 transition-colors duration-300">
+                  <span class="flex items-center gap-2">
+                    <UIcon :name="acc.icon" class="w-5 h-5 text-amber-500" /> 
+                    {{ acc.title }}
+                  </span>
+                  <UIcon :name="activeAccordion === index ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'" class="w-5 h-5 text-gray-500 group-hover:!text-white dark:group-hover:!text-slate-900 transition-colors duration-300" />
+                </div>
+                <p v-show="activeAccordion === index" class="text-[13px] text-gray-600 dark:text-gray-300 group-hover:!text-gray-200 dark:group-hover:!text-zinc-800 mt-2.5 leading-relaxed transition-colors duration-300 pl-7">
+                  {{ acc.content }}
+                </p>
+              </div>
+            </div>
+
+            <!-- <div class="pt-4">
+              <NuxtLink to="/about" class="inline-flex items-center gap-2 text-gray-900 dark:text-white font-bold text-[14px] border-b-2 border-amber-500 pb-1 hover:text-amber-500 transition-colors">
+                <span>몽골~울산 이동 경로 및 깃털 데이터 자세히 보기</span>
+                <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
+              </NuxtLink>
+            </div> -->
+          </div>
+
+          <!-- Right Interactive Wingspan Comparison Visual -->
+          <div class="lg:col-span-6 bg-slate-100 dark:bg-zinc-900 rounded-3xl p-8 border border-black/10 dark:border-white/10 relative text-center">
+            <div class="text-[12px] font-bold text-amber-500 uppercase tracking-widest mb-4">Size Comparison Visual</div>
+            
+            <!-- Silhouette Illustration Container -->
+            <div class="py-6 flex flex-col items-center justify-center space-y-6">
+              <div class="w-full relative flex items-center justify-center">
+                <!-- Eagle SVG Wingspan representation -->
+                <svg class="w-full max-w-[380px] text-slate-800 dark:text-amber-400 h-auto drop-shadow-md" viewBox="0 0 300 120" fill="currentColor">
+                  <path d="M150 45 C120 10, 60 5, 10 35 C40 55, 90 60, 130 55 C140 55, 145 65, 150 70 C155 65, 160 55, 170 55 C210 60, 260 55, 290 35 C240 5, 180 10, 150 45 Z"/>
+                </svg>
+              </div>
+              
+              <div class="w-full bg-slate-300 dark:bg-zinc-700 h-[2px] relative flex items-center justify-between">
+                <span class="text-[11px] font-mono font-bold text-gray-700 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 px-2">0m</span>
+                <span class="text-[11px] font-mono font-bold text-amber-500 bg-slate-100 dark:bg-zinc-900 px-2">WingSpan 3.0m</span>
+                <span class="text-[11px] font-mono font-bold text-gray-700 dark:text-gray-300 bg-slate-100 dark:bg-zinc-900 px-2">3.0m</span>
+              </div>
+
+              <!-- Comparison Human vs Eagle -->
+              <div class="grid grid-cols-2 gap-4 w-full pt-4">
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-2xl border border-black/10 dark:border-white/10 shadow-sm">
+                  <span class="text-[12px] text-gray-800 dark:text-gray-400 font-medium block">성인 인간 양팔 폭</span>
+                  <span class="text-[20px] font-bold text-gray-900 dark:text-white">~ 1.7 m</span>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-2xl border border-amber-500/50 shadow-sm">
+                  <span class="text-[12px] text-amber-600 font-semibold block">독수리 양 날개 폭</span>
+                  <span class="text-[20px] font-bold text-amber-600">~ 3.0 m</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup>
-
 const postStore = usePostStore()
 const cardStore = useGetCardStore()
 
-const listUsersResult = ref(null)
+const welcomeRef = ref(null)
+const cardsRef = ref(null)
+const updatesRef = ref(null)
+const impactRef = ref(null)
+const anatomyRef = ref(null)
+
+const seasonYear = ref(2026)
+const activeAccordion = ref(0)
+
+const accordions = ref([
+  {
+    icon: 'i-heroicons-sparkles',
+    title: '압도적인 크기와 3.0m 양 날개 폭',
+    content: '독수리는 수리과 조류 중 가장 큰 대형 조류로, 양 날개를 펼치면 최대 3.1m에 달해 하강 비행 시 거대한 상승 기류를 타고 유유히 비행합니다.'
+  },
+  {
+    icon: 'i-heroicons-shield-check',
+    title: '공격성 없는 자연의 청소부 (Scavenger)',
+    content: '사냥을 하지 않고 동물의 사체만을 먹는 평화주의 조류입니다. 생태계 사체를 신속히 처리하여 전염병 확산을 방지하는 중요한 자연 청소자 역할을 담당합니다.'
+  },
+  {
+    icon: 'i-heroicons-map-pin',
+    title: '3,400km 몽골-울산 동계 이주 여정',
+    content: '매년 11월 혹독한 몽골 추위를 피해 3,400km를 내려와 태화강 및 울주 생태 보전 구역에서 따뜻한 겨울을 보내고 이듬해 3월 다시 북상합니다.'
+  }
+])
+
+const toggleAccordion = (index) => {
+  activeAccordion.value = activeAccordion.value === index ? -1 : index
+}
+
 const { sampleBlogPost, welcomeScreen } = storeToRefs(postStore)
 const { pEmail } = useUsersStore()
-// const blogPostsCards = computed(() => {
-//   return cardStore.blogPostsCards
-// })
+
+onMounted(() => {
+  if (process.client) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('scale-90', 'opacity-0')
+          entry.target.classList.add('scale-100', 'opacity-100')
+        }
+      })
+    }, { threshold: 0.1 })
+
+    if (welcomeRef.value) observer.observe(welcomeRef.value)
+    if (cardsRef.value) observer.observe(cardsRef.value)
+    if (updatesRef.value) observer.observe(updatesRef.value)
+    if (impactRef.value) observer.observe(impactRef.value)
+    if (anatomyRef.value) observer.observe(anatomyRef.value)
+  }
+})
+
 const handleClick = () => {  
   cardStore.getNext()
 }
-const isOpen = ref(false)
-
-const endNotice = () => {
-  alert('접수가 마감되었습니다. 감사합니다.')
-}
-
 </script>
 
 <style scoped>

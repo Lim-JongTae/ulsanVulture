@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-card">       
+  <div ref="cardRef" class="blog-card transition-all duration-700 transform scale-85 opacity-0">       
     <div class="icons" v-show="editPost">
       <div class="icon" @click="editBlog">
         <UIcon name="i-heroicons-pencil-square" class="w-6 h-6 text-green-700"  />        
@@ -25,6 +25,23 @@ const cardStore = useGetCardStore()
 const toast = useToast()
 const router = useRouter()
 const route = useRoute()
+const cardRef = ref(null)
+
+onMounted(() => {
+  if (process.client && cardRef.value) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          cardRef.value.classList.remove('scale-85', 'opacity-0')
+          cardRef.value.classList.add('scale-100', 'opacity-100')
+        }
+      })
+    }, {
+      threshold: 0.1
+    })
+    observer.observe(cardRef.value)
+  }
+})
 const props = defineProps({
   post: {
     type: Object,

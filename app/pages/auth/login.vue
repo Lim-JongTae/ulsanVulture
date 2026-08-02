@@ -88,6 +88,34 @@ const regErrors = ref({ displayName: '', email: '', password: '', repassword: ''
 // const { $auth } = useNuxtApp()
 const isActive = ref(false)
 
+// Firebase Auth 오류 코드를 한글 메시지로 변환해 주는 헬퍼 함수
+const getFirebaseErrorMessage = (code, defaultMsg = '오류가 발생했습니다.') => {
+  switch (code) {
+    case 'auth/email-already-in-use':
+      return '이미 사용 중인 이메일 주소입니다.'
+    case 'auth/invalid-email':
+      return '올바른 이메일 형식이 아닙니다.'
+    case 'auth/weak-password':
+      return '비밀번호가 너무 약합니다. 최소 6자 이상 입력해 주세요.'
+    case 'auth/user-not-found':
+      return '등록되지 않은 이메일 계정입니다.'
+    case 'auth/wrong-password':
+      return '비밀번호가 올바르지 않습니다.'
+    case 'auth/invalid-credential':
+      return '이메일 또는 비밀번호가 올바르지 않습니다.'
+    case 'auth/user-disabled':
+      return '비활성화된 계정입니다. 관리자에게 문의해 주세요.'
+    case 'auth/too-many-requests':
+      return '로그인 시도가 너무 많아 계정이 일시 잠겼습니다. 잠시 후 다시 시도해 주세요.'
+    case 'auth/network-request-failed':
+      return '네트워크 연결이 원활하지 않습니다. 인터넷 상태를 확인해 주세요.'
+    case 'auth/popup-closed-by-user':
+      return '로그인 창이 닫혔습니다.'
+    default:
+      return defaultMsg
+  }
+}
+
 const handleRegSubmit = async () => {
   regErrors.value = { displayName: '', email: '', password: '', repassword: '', server: '' }
   let hasError = false
@@ -126,21 +154,20 @@ const handleRegSubmit = async () => {
       }
     })
   } catch (error) {
-    console.log(error)
-    const code = error.code
-    if (code === 'auth/email-already-in-use') {
-      regErrors.value.email = '이미 사용 중인 이메일입니다.'
-    } else if (code === 'auth/invalid-email') {
-      regErrors.value.email = '유효하지 않은 이메일 형식입니다.'
+    console.error('Firebase Auth Register Error:', error)
+    const code = error.code || ''
+    const msg = getFirebaseErrorMessage(code, '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.')
+    
+    if (code === 'auth/email-already-in-use' || code === 'auth/invalid-email') {
+      regErrors.value.email = msg
     } else if (code === 'auth/weak-password') {
-      regErrors.value.password = '비밀번호가 너무 약합니다. 6자 이상으로 설정해 주세요.'
-    } else if (code === 'auth/network-request-failed') {
-      regErrors.value.server = '네트워크 연결을 확인해 주세요.'
+      regErrors.value.password = msg
     } else {
-      regErrors.value.server = '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.'
+      regErrors.value.server = msg
     }
   }
 }
+
 const handleLoginSubmit = async () => {
   errorMsg.value = ''
   if (!email.value) {
@@ -154,24 +181,16 @@ const handleLoginSubmit = async () => {
   try {
     await authStore.login(email.value, password.value)
     toast.add({
-      title: "로그인 중입니다...",
-      timeout: 2500,
+      title: "성공적으로 로그인되었습니다.",
+      timeout: 1500,
       callback: async () => {
         await navigateTo('/')
       }
     })
   } catch (error) {
-    console.log(error)
-    const code = error.code
-    if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
-      errorMsg.value = '이메일 또는 비밀번호가 올바르지 않습니다.'
-    } else if (code === 'auth/too-many-requests') {
-      errorMsg.value = '로그인 시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.'
-    } else if (code === 'auth/network-request-failed') {
-      errorMsg.value = '네트워크 연결을 확인해 주세요.'
-    } else {
-      errorMsg.value = '로그인 중 오류가 발생했습니다. 다시 시도해 주세요.'
-    }
+    console.error('Firebase Auth Login Error:', error)
+    const code = error.code || ''
+    errorMsg.value = getFirebaseErrorMessage(code, '로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.')
   }
 }
 </script>

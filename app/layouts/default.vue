@@ -1,7 +1,7 @@
 <template>
   <div>                
     <AppNavNew />        
-    <main>
+    <main class="main-content">
       <slot />            
     </main>  
     <AppFooter /> 
@@ -40,5 +40,7 @@ useHead({
 </script>
 
 <style scoped>
-
+.main-content {
+  padding-top: calc(var(--header-height, 0.5rem));
+}
 </style>
