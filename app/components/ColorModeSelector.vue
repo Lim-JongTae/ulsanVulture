@@ -13,7 +13,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 2.5rem;
+  right: 1.5rem;
   z-index: 101;
 }
 
@@ -22,7 +22,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 5rem;
+    right: 4rem;
   }  
 }
 
@@ -31,7 +31,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 4.8rem;
+    right: 3.8rem;
   }  
 }
 </style>

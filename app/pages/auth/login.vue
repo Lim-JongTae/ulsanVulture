@@ -1,23 +1,44 @@
 <template>
   <div class="poppins-font top">           
     <div class="container1" :class="{active: isActive}">
+      <!-- 로그인 폼 (Nuxt UI UForm + UInput + Zod schema) -->
       <div class="form-box login">
-        <UForm class="form1" action="" @submit.prevent="handleLoginSubmit">
-          <h1 class="jua-font">로그인</h1>         
-          <div class="input-box">
-            <input type="email" placeholder="Emain" v-model="email" required>
-            <UIcon class="input-box-icon" name="i-heroicons-envelope-20-solid"></UIcon>
-          </div>
-          <div class="input-box">
-            <input type="password" placeholder="password" v-model="password" required>
-            <UIcon class="input-box-icon" name="heroicons-lock-closed-solid"></Uicon>
-          </div>          
+        <UForm :schema="loginSchema" :state="loginState" class="form1 space-y-4" @submit="handleLoginSubmit">
+          <h1 class="jua-font mb-4">로그인</h1>         
+          
+          <UFormGroup name="email" class="text-left">
+            <UInput 
+              v-model="loginState.email" 
+              type="email" 
+              placeholder="E-mail" 
+              icon="i-heroicons-envelope-20-solid" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>
+
+          <UFormGroup name="password" class="text-left">
+            <UInput 
+              v-model="loginState.password" 
+              type="password" 
+              placeholder="비밀번호 (8자 이상)" 
+              icon="i-heroicons-lock-closed-20-solid" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>          
+
           <div class="forgot-link">            
             <NuxtLink class="forgot-link-to" to="/auth/forgotPassword">비밀번호를 잃어버렸습니까?</NuxtLink>            
           </div>
-          <UButton type="submit" size="x-large" color="#7494ec" rounded="lg" class="btn login-btn -mt-2"><span class="mx-auto">로그인</span></UButton>
-          <p v-if="errorMsg" class="error-msg">{{ errorMsg }}</p>
+
+          <UButton type="submit" size="xl" block color="indigo" rounded="lg" class="btn login-btn">
+            <span class="mx-auto font-bold">로그인</span>
+          </UButton>
+
+          <p v-if="loginErrorMsg" class="error-msg server-error">{{ loginErrorMsg }}</p>
           <p class="text-p">울산독수리와 함께~~</p>
+
           <div class="social-icons">
             <NuxtLink class="link1" to="#" target="_blank"><UIcon class="input-box-icon" name="i-mdi-google"></UIcon></NuxtLink>
             <NuxtLink class="link1" to="#" target="_blank"><UIcon class="input-box-icon" name="i-mdi-facebook"></UIcon></NuxtLink>
@@ -26,33 +47,65 @@
           </div>
         </UForm>
       </div>    
-      <div class="form-box register" >
-        <UForm class="form1" action="" @submit.prevent="handleRegSubmit">
-          <h1 class="jua-font">회원가입</h1>
-          <div class="input-box">
-            <input type="text" placeholder="userName" v-model="displayName" />
-            <UIcon class="input-box-icon" name="i-mdi-account-circle"></UIcon>
-            <p v-if="regErrors.displayName" class="error-msg">{{ regErrors.displayName }}</p>
-          </div>
-          <div class="input-box">
-            <input type="email" placeholder="E-mail" v-model="regEmail" />
-            <UIcon class="input-box-icon" name="i-mdi-email"></UIcon>
-            <p v-if="regErrors.email" class="error-msg">{{ regErrors.email }}</p>
-          </div>
-          <div class="input-box">
-            <input type="password" placeholder="password" v-model="regPassword" />
-            <UIcon class="input-box-icon" name="i-mdi-lock"></UIcon>
-            <p v-if="regErrors.password" class="error-msg">{{ regErrors.password }}</p>
-          </div>
-          <div class="input-box">
-            <input type="password" placeholder="비밀번호 확인" v-model="repassword" />
-            <UIcon class="input-box-icon" name="i-ic-sharp-lock-person"></UIcon>
-            <p v-if="regErrors.repassword" class="error-msg">{{ regErrors.repassword }}</p>
-          </div>
-          <UButton type="submit" color="#7494ec" rounded="lg" class="btn login-btn"><span class="mx-auto">회원가입</span></UButton>
-          <p v-if="regErrors.server" class="error-msg">{{ regErrors.server }}</p>
+
+      <!-- 회원가입 폼 (Nuxt UI UForm + UInput + Zod schema) -->
+      <div class="form-box register">
+        <UForm :schema="registerSchema" :state="regState" class="form1 space-y-3" @submit="handleRegSubmit">
+          <h1 class="jua-font mb-4">회원가입</h1>
+
+          <UFormGroup name="displayName" class="text-left">
+            <UInput 
+              v-model="regState.displayName" 
+              type="text" 
+              placeholder="이름 (2자 이상)" 
+              icon="i-mdi-account-circle" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>
+
+          <UFormGroup name="email" class="text-left">
+            <UInput 
+              v-model="regState.email" 
+              type="email" 
+              placeholder="E-mail" 
+              icon="i-mdi-email" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>
+
+          <UFormGroup name="password" class="text-left">
+            <UInput 
+              v-model="regState.password" 
+              type="password" 
+              placeholder="비밀번호 (8자 이상)" 
+              icon="i-mdi-lock" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>
+
+          <UFormGroup name="repassword" class="text-left">
+            <UInput 
+              v-model="regState.repassword" 
+              type="password" 
+              placeholder="비밀번호 확인" 
+              icon="i-ic-sharp-lock-person" 
+              size="xl"
+              class="w-full"
+            />
+          </UFormGroup>
+
+          <UButton type="submit" size="xl" block color="indigo" rounded="lg" class="btn login-btn mt-2">
+            <span class="mx-auto font-bold">회원가입</span>
+          </UButton>
+
+          <p v-if="regErrorMsg" class="error-msg server-error">{{ regErrorMsg }}</p>
         </UForm>
       </div>    
+
+      <!-- 토글 패널 -->
       <div class="toggle-box">
         <div class="toggle-panel toggle-left">
           <h1>Hello, Welcome</h1>
@@ -62,7 +115,7 @@
         <div class="toggle-panel toggle-right">
           <h1 class="mb-8">Welcome Back!</h1>
           <p class="mt-6">이미 계정이 있습니까?</p>
-          <UButton class="btn login-btn bg-transparent" @click="isActive = false"><Span class="mx-auto">로그인</Span></UButton>
+          <UButton class="btn login-btn bg-transparent" @click="isActive = false"><span class="mx-auto">로그인</span></UButton>
         </div>
       </div>
     </div>
@@ -70,23 +123,49 @@
 </template>
 
 <script setup>
+import { reactive, ref } from 'vue'
+import { z } from 'zod'
+
 definePageMeta({
   layout: 'layout-login'
 })
+
 const toast = useToast() 
 const authStore = useFirebaseAuthStore()
-const useStore = storeToRefs(useUsersStore())
-const displayName = ref('')
-const email = ref('')
-const password = ref('')
-const repassword = ref('')
-const errorMsg = ref('')
-// 회원가입 전용 필드 (로그인 필드와 분리)
-const regEmail = ref('')
-const regPassword = ref('')
-const regErrors = ref({ displayName: '', email: '', password: '', repassword: '', server: '' })
-// const { $auth } = useNuxtApp()
 const isActive = ref(false)
+
+// 로그인 상태
+const loginState = reactive({
+  email: '',
+  password: ''
+})
+const loginErrorMsg = ref('')
+
+// 회원가입 상태
+const regState = reactive({
+  displayName: '',
+  email: '',
+  password: '',
+  repassword: ''
+})
+const regErrorMsg = ref('')
+
+// 1. 로그인 Zod 스키마
+const loginSchema = z.object({
+  email: z.string().min(1, '이메일을 입력해 주세요.').email('올바른 이메일 형식이 아닙니다.'),
+  password: z.string().min(1, '비밀번호를 입력해 주세요.').min(8, '비밀번호는 8자리 이상이어야 합니다.')
+})
+
+// 2. 회원가입 Zod 스키마 (이름 2자리 이상, 비밀번호 8자리 이상)
+const registerSchema = z.object({
+  displayName: z.string().min(1, '이름을 입력해 주세요.').min(2, '이름은 2자리 이상이어야 합니다.'),
+  email: z.string().min(1, '이메일을 입력해 주세요.').email('올바른 이메일 형식이 아닙니다.'),
+  password: z.string().min(1, '비밀번호를 입력해 주세요.').min(8, '비밀번호는 8자리 이상이어야 합니다.'),
+  repassword: z.string().min(1, '비밀번호 확인을 입력해 주세요.')
+}).refine((data) => data.password === data.repassword, {
+  message: '비밀번호가 일치하지 않습니다.',
+  path: ['repassword']
+})
 
 // Firebase Auth 오류 코드를 한글 메시지로 변환해 주는 헬퍼 함수
 const getFirebaseErrorMessage = (code, defaultMsg = '오류가 발생했습니다.') => {
@@ -96,7 +175,7 @@ const getFirebaseErrorMessage = (code, defaultMsg = '오류가 발생했습니�
     case 'auth/invalid-email':
       return '올바른 이메일 형식이 아닙니다.'
     case 'auth/weak-password':
-      return '비밀번호가 너무 약합니다. 최소 6자 이상 입력해 주세요.'
+      return '비밀번호가 너무 약합니다. 최소 8자 이상 입력해 주세요.'
     case 'auth/user-not-found':
       return '등록되지 않은 이메일 계정입니다.'
     case 'auth/wrong-password':
@@ -116,70 +195,10 @@ const getFirebaseErrorMessage = (code, defaultMsg = '오류가 발생했습니�
   }
 }
 
-const handleRegSubmit = async () => {
-  regErrors.value = { displayName: '', email: '', password: '', repassword: '', server: '' }
-  let hasError = false
-
-  if (!displayName.value) {
-    regErrors.value.displayName = '닉네임을 입력해 주세요.'
-    hasError = true
-  }
-  if (!regEmail.value) {
-    regErrors.value.email = '이메일을 입력해 주세요.'
-    hasError = true
-  }
-  if (!regPassword.value) {
-    regErrors.value.password = '비밀번호를 입력해 주세요.'
-    hasError = true
-  } else if (regPassword.value.length < 6) {
-    regErrors.value.password = '비밀번호는 6자 이상이어야 합니다.'
-    hasError = true
-  }
-  if (!repassword.value) {
-    regErrors.value.repassword = '비밀번호 확인을 입력해 주세요.'
-    hasError = true
-  } else if (regPassword.value !== repassword.value) {
-    regErrors.value.repassword = '비밀번호가 일치하지 않습니다.'
-    hasError = true
-  }
-  if (hasError) return
-
+const handleLoginSubmit = async (event) => {
+  loginErrorMsg.value = ''
   try {
-    await authStore.register(regEmail.value, regPassword.value, displayName.value)
-    toast.add({
-      title: "성공적으로 회원가입 되었습니다.",
-      timeout: 2000,
-      callback: async () => {
-        await navigateTo('/')
-      }
-    })
-  } catch (error) {
-    console.error('Firebase Auth Register Error:', error)
-    const code = error.code || ''
-    const msg = getFirebaseErrorMessage(code, '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.')
-    
-    if (code === 'auth/email-already-in-use' || code === 'auth/invalid-email') {
-      regErrors.value.email = msg
-    } else if (code === 'auth/weak-password') {
-      regErrors.value.password = msg
-    } else {
-      regErrors.value.server = msg
-    }
-  }
-}
-
-const handleLoginSubmit = async () => {
-  errorMsg.value = ''
-  if (!email.value) {
-    errorMsg.value = '이메일을 입력해 주세요.'
-    return
-  }
-  if (!password.value) {
-    errorMsg.value = '비밀번호를 입력해 주세요.'
-    return
-  }
-  try {
-    await authStore.login(email.value, password.value)
+    await authStore.login(event.data.email, event.data.password)
     toast.add({
       title: "성공적으로 로그인되었습니다.",
       timeout: 1500,
@@ -190,7 +209,25 @@ const handleLoginSubmit = async () => {
   } catch (error) {
     console.error('Firebase Auth Login Error:', error)
     const code = error.code || ''
-    errorMsg.value = getFirebaseErrorMessage(code, '로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.')
+    loginErrorMsg.value = getFirebaseErrorMessage(code, '로그인 중 오류가 발생했습니다. 이메일과 비밀번호를 확인해 주세요.')
+  }
+}
+
+const handleRegSubmit = async (event) => {
+  regErrorMsg.value = ''
+  try {
+    await authStore.register(event.data.email, event.data.password, event.data.displayName)
+    toast.add({
+      title: "성공적으로 회원가입 되었습니다.",
+      timeout: 2000,
+      callback: async () => {
+        await navigateTo('/')
+      }
+    })
+  } catch (error) {
+    console.error('Firebase Auth Register Error:', error)
+    const code = error.code || ''
+    regErrorMsg.value = getFirebaseErrorMessage(code, '회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.')
   }
 }
 </script>
@@ -241,42 +278,14 @@ const handleLoginSubmit = async () => {
 }
 .form1 {
   width: 100%;
-  margin-top: -30px;
+  margin-top: -20px;
 }
 .container1 h1 {
   font-size: 36px;
-  margin: -10px 0;
-}
-.input-box {
-  position: relative;
-  margin: 30px;  
-}
-.input-box input {
-  padding: 13px 50px 13px 20px;
-  background: white;
-  width: 100%;  
-  background: #eee;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-}
-.input-box input::placeholder {
-  color: #888;
-  font-weight: 400;
-}
-.input-box .input-box-icon{
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-  font-size: 20px;  
 }
 .forgot-link {
-  margin: -15px 0 15px 0
+  margin: 5px 0 15px 0;
+  text-align: center;
 }
 .forgot-link .forgot-link-to {
   font-size: 14.5px;
@@ -288,16 +297,14 @@ const handleLoginSubmit = async () => {
   color: #7494ec;  
   text-decoration-line: underline;
   transition: 0.8s ease-in-out;
-  }
+}
 .btn {
   width: 100%;
   height: 48px;
-  background: #7494ec;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0,0.1);
   border: none;
   font-size: 16px;
-  color: #fff;
 }
 .container1 .text-p {
   font-size: 14.5px;
@@ -314,7 +321,7 @@ const handleLoginSubmit = async () => {
   margin: 0 8px;
 }
 .login-btn {
-  width: 300px;
+  width: 100%;
   border: none;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
@@ -332,7 +339,7 @@ const handleLoginSubmit = async () => {
   background: #7494ec;  
   border-radius: 150px;
   z-index: 2;
-  transition: 1.5s ease-in-out;;
+  transition: 1.5s ease-in-out;
 }
 .container1.active .toggle-box::before {
   left: 50%;
@@ -368,7 +375,10 @@ const handleLoginSubmit = async () => {
 .error-msg {
   color: #e53e3e;
   font-size: 13px;
-  margin: 6px 0 0;
+}
+.server-error {
+  text-align: center;
+  margin-top: 10px;
 }
 .toggle-panel p {
   margin-bottom: 20px;
@@ -389,10 +399,9 @@ const handleLoginSubmit = async () => {
    float: left;
    margin-left: 47px;
    font-size: x-large;
- 
   } 
   .container1 {
-    height: calc(100vh-20px);   
+    height: calc(100vh - 20px);   
   }
   .form-box {    
     width: 100%;
@@ -402,7 +411,6 @@ const handleLoginSubmit = async () => {
   .container1.active .form-box {
     right: 0;
     top: 22%;
-    /* bottom: 32%; */
   }
   .toggle-box::before {
     left: 0;
@@ -435,13 +443,9 @@ const handleLoginSubmit = async () => {
   }
   .resister-btn {
     top: -7%;
-  }   
-  .input-box input {
-    margin-top: 5px;
-   
   }
 }
-@media  screen and (max-width: 400px) {
+@media screen and (max-width: 400px) {
   .form-box {
     padding: 20px;
   }
@@ -457,7 +461,6 @@ const handleLoginSubmit = async () => {
     color: #333;
     text-decoration: none;
     margin: 15px 8px;
-}
-
+  }
 }
 </style>

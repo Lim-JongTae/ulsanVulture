@@ -226,6 +226,7 @@ const toggleProfileMenu = (event) => {
 /* Profine */
 .profile {
   position: relative;
+  align-self: center;
   cursor: pointer;
   display: flex;
   align-items: center;

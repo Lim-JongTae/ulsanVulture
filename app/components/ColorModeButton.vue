@@ -51,7 +51,7 @@ const startViewTransition = (event) => {
       color="gray"
       variant="ghost"
       size="xl"
-      class="rounded-full p-1.5 flex items-center justify-center text-2xl [&_span]:!w-7 [&_span]:!h-7 !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent transition-all duration-300 hover:scale-110 text-amber-400 dark:text-amber-400 hover:text-amber-300 dark:hover:text-amber-300"
+      class="rounded-full p-1.5 ml-5 flex items-center justify-center text-2xl [&_span]:!w-7 [&_span]:!h-7 !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent transition-all duration-300 hover:scale-110 text-amber-400 dark:text-amber-400 hover:text-amber-300 dark:hover:text-amber-300"
       @click="startViewTransition"
     />
     <template #fallback>

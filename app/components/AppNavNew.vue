@@ -466,7 +466,8 @@ definePageMeta({
 }
 .profile {
   position: absolute;
-  top: 15%;
+  top: 50%;
+  transform: translateY(-50%);
   right: 10%;
   cursor: pointer;
   display: flex;
