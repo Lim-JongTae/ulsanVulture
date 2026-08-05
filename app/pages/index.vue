@@ -110,7 +110,7 @@
             <UIcon name="i-heroicons-user-group" class="w-7 h-7" />
           </div>
           <div class="text-[38px] font-extrabold text-gray-900 dark:text-white tracking-tight mb-1 group-hover:text-amber-500 transition-colors">
-            <span class="inline-block hover:scale-110 transition-transform">6</span><span class="text-[18px] font-bold text-gray-500 ml-1">년</span>
+            <span class="inline-block hover:scale-110 transition-transform">{{ activityYears }}</span><span class="text-[18px] font-bold text-gray-500 ml-1">년</span>
           </div>
           <h4 class="text-[16px] font-bold text-gray-900 dark:text-white mb-2">시민 수호대 먹이주기 & 생태교육</h4>
           <p class="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed">2020년부터 몽골에서 날아온 독수리들에게 안전한 먹거리를 제공하며, 어린이와 학부모를 위한 생태교육도 함께 진행하고 있습니다.</p>
@@ -235,7 +235,9 @@ const updatesRef = ref(null)
 const impactRef = ref(null)
 const anatomyRef = ref(null)
 
-const seasonYear = ref(2026)
+const currentYear = new Date().getFullYear()
+const seasonYear = ref(currentYear)
+const activityYears = computed(() => currentYear - 2020)
 const activeAccordion = ref(0)
 
 const accordions = ref([
