@@ -23,7 +23,7 @@
               로그인/회원가입
               <UIcon name="i-heroicons-arrow-long-right-16-solid" class="w-7 h-7 ml-2 dark:invert arrow"/>
             </NuxtLink>      
-            <div class="pt-2 flex justify-center w-full">
+            <div v-if="!post.welcomeScreen" class="pt-2 flex justify-center w-full">
               <NuxtLink 
                 class="inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-full font-bold text-base sm:text-lg bg-amber-700/10 dark:bg-amber-400/15 text-amber-900 dark:text-amber-300 border border-amber-700/20 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-slate-950 transition-all duration-300 shadow-md hover:scale-105"  
                 :to="`/detailBlog/${post.id}`"
