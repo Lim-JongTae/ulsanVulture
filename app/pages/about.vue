@@ -112,6 +112,53 @@
 </template>
 
 <script>export default { 
+  head() {
+    return {
+      title: '울산독수리 학교 소개 및 시민과학 활동 - 울산독수리.com',
+      meta: [
+        {
+          name: 'description',
+          content: 'UN ECOSOC 특별자문지위 NGO 녹색에너지시민촉진포럼의 생물다양성 보존 및 기후변화 대응 교육활동을 소개합니다.'
+        },
+        {
+          property: 'og:title',
+          content: '울산독수리 학교 소개 및 시민과학 활동 - 울산독수리.com'
+        },
+        {
+          property: 'og:description',
+          content: 'UN ECOSOC 특별자문지위 NGO 녹색에너지시민촉진포럼의 생물다양성 보존 및 기후변화 대응 교육활동을 소개합니다.'
+        },
+        {
+          property: 'og:image',
+          content: 'https://울산독수리.com/etc/ECOSOC.jpg'
+        }
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "기후변화 대응과 생물다양성 보존을 위한 울산독수리 공동체",
+            "description": "UN경제사회이사회 특별자문 지위를 획득한 녹색에너지포럼의 환경보호 및 독수리 생태계 시민과학 활동 소개",
+            "image": ["https://울산독수리.com/etc/ECOSOC.jpg"],
+            "author": {
+              "@type": "Organization",
+              "name": "녹색에너지시민촉진포럼"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "울산독수리.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://울산독수리.com/logo.png"
+              }
+            }
+          })
+        }
+      ]
+    }
+  },
   data () {
     return {
       isStart: true,

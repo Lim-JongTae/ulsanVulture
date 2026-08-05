@@ -152,9 +152,12 @@ button,
 }
 .blog-card-wrap {
   position: relative;
-  padding: 8rem 1.6rem;
-  margin:5rem auto;
-  background-color: #f1f1f1;
+  padding: 5rem 2rem;
+  margin: 4rem auto;
+  background-color: #f5f4ef;
+  border-radius: 2rem;
+  border: 1px solid rgba(120, 113, 108, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
 .blog-cards {

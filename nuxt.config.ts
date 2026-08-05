@@ -17,23 +17,42 @@ export default defineNuxtConfig({
    }
  }, 
 
- app: {
-  head: {
-    link: [
-      {
-        rel: 'manifest',
-        href: '/manifest.webmanifest'
-      }
-    ],
-    script: [
-      {
-        async: true,
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9938049374204211',
-        crossorigin: 'anonymous'
-      }
-    ]
-  }
- },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'ko'
+      },
+      title: '울산독수리.com - 태화강 독수리 월동 및 생태학교',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'naver-site-verification', content: 'YOUR_NAVER_VERIFICATION_CODE' },
+        { 
+          name: 'description', 
+          content: '매년 11월 몽골에서 울산으로 날아오는 천연기념물 독수리 관찰 정보와 독수리학교 체험 예약, 실시간 현황을 만나보세요.' 
+        },
+        { property: 'og:title', content: '울산독수리.com - 태화강 독수리 월동 및 생태학교' },
+        { property: 'og:description', content: '천연기념물 독수리 보호 및 녹색에너지 생태 교육 시민 공동체 활동' },
+        { property: 'og:image', content: 'https://울산독수리.com/og_2.jpg' },
+        { property: 'og:url', content: 'https://울산독수리.com' },
+        { property: 'og:type', content: 'website' }
+      ],
+      link: [
+        { rel: 'canonical', href: 'https://울산독수리.com' },
+        {
+          rel: 'manifest',
+          href: '/manifest.webmanifest'
+        }
+      ],
+      script: [
+        {
+          async: true,
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9938049374204211',
+          crossorigin: 'anonymous'
+        }
+      ]
+    }
+  },
   // unhead: {
   //   renderSSRHeadOptions: {
   //     omitLineBreaks: false

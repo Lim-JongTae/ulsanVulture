@@ -1,28 +1,43 @@
 <template>
-  <div ref="wrapperRef" class="blog-wrapper shadow04 no-user relative overflow-hidden transition-all duration-700 transform scale-90 opacity-0">
+  <div 
+    ref="wrapperRef" 
+    class="blog-wrapper shadow-xl relative overflow-hidden transition-all duration-700 transform scale-90 opacity-0 rounded-3xl border my-8 p-6 sm:p-8 md:p-10"
+    :class="[
+      post.welcomeScreen 
+        ? 'bg-gradient-to-r from-slate-900 via-stone-900 to-emerald-950 text-white border-emerald-500/20' 
+        : 'bg-gradient-to-br from-stone-100 via-amber-50/60 to-emerald-900/10 dark:from-zinc-900 dark:via-stone-900/90 dark:to-emerald-950/40 text-stone-800 dark:text-stone-100 border-amber-900/10 dark:border-amber-500/20'
+    ]"
+  >
     <!-- 3D Animation Background for Hero Section -->
     <Hero3DBackground v-if="post.welcomeScreen" />
 
-    <div class="blog-content relative z-10">
-        <div class="whitespace-pre-wrap blog-title">          
-            <h2 v-if="post.welcomeScreen" class="roboto-font">{{ post.title }}</h2>            
-            <h2 v-else class="jua-font">{{ post.blogTitle }}</h2>
-            <p v-if="post.welcomeScreen" class="notossans-font post-title">{{ post.blogPost}}</p>            
-            <p class="content-preview notosans-font" v-else v-html="post.blogHTML"></p>
-            <NuxtLink class="link link-light font-bold" v-if="!user" to="/auth/login">로그인/회원가입
+    <div class="blog-content relative z-10 w-full flex-1 flex flex-col items-center justify-center text-center">
+        <div class="blog-title space-y-5 flex flex-col items-center text-center w-full">          
+            <h2 v-if="post.welcomeScreen" class="roboto-font text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight mb-2 text-center">{{ post.title }}</h2>            
+            <h2 v-else class="jua-font text-2xl sm:text-3xl font-bold text-stone-900 dark:text-amber-400 leading-snug mb-2 text-center">{{ post.blogTitle }}</h2>
+            
+            <p v-if="post.welcomeScreen" class="notosans-font post-title text-lg sm:text-xl font-medium text-stone-200 leading-relaxed text-center">{{ post.blogPost }}</p>            
+            <div class="content-preview notosans-font text-lg sm:text-xl md:text-2xl font-bold text-stone-800 dark:text-stone-100 leading-relaxed tracking-tight text-center" v-else v-html="post.blogHTML"></div>
+            
+            <NuxtLink class="link link-light font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 text-lg" v-if="!user" to="/auth/login">
+              로그인/회원가입
               <UIcon name="i-heroicons-arrow-long-right-16-solid" class="w-7 h-7 ml-2 dark:invert arrow"/>
             </NuxtLink>      
-            <div class="disnone">
-              <NuxtLink class="link disnone text-gray-600"  :to="`/detailBlog/${post.id}`">
-                게시물 보기
+            <div class="pt-2 flex justify-center w-full">
+              <NuxtLink 
+                class="inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-full font-bold text-base sm:text-lg bg-amber-700/10 dark:bg-amber-400/15 text-amber-900 dark:text-amber-300 border border-amber-700/20 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-500 dark:hover:text-slate-950 transition-all duration-300 shadow-md hover:scale-105"  
+                :to="`/detailBlog/${post.id}`"
+              >
+                <span>게시물 보기</span>
+                <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
               </NuxtLink>                                       
             </div>   
         </div>
     </div>
-        <div class="blog-photo relative z-10">
-          <NuxtImg class="img" v-if="post.welcomeScreen" :src="`/blogPhotos/${post.photo}.jpg`" alt="Welcome Image" />
-          <NuxtImg class="img" v-else :src="`/blogPhotos/${post.blogCoverPhoto}.jpg`" alt="CoverPhoto" />                        
-      </div>
+    <div class="blog-photo relative z-10 w-full flex-1 overflow-hidden flex items-center justify-center">
+      <NuxtImg class="img rounded-2xl shadow-lg hover:scale-105 transition-transform duration-500 max-h-[380px] w-full object-cover" v-if="post.welcomeScreen" :src="`/blogPhotos/${post.photo}.jpg`" alt="Welcome Image" />
+      <NuxtImg class="img rounded-2xl shadow-lg hover:scale-105 transition-transform duration-500 max-h-[380px] w-full object-cover" v-else :src="`/blogPhotos/${post.blogCoverPhoto}.jpg`" alt="CoverPhoto" />                        
+    </div>
   </div>
 </template>
 
@@ -54,114 +69,86 @@ onMounted(() => {
 .blog-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  margin-top: calc(var(--header-height, 3.5rem) + 10px);
+  min-height: auto;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  gap: 2rem;
 }
 .blog-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 4;
+  text-align: center;
+  flex: 1 1 50%;
   order: 2;  
 }
 
 .blog-wrapper:nth-child(even) .blog-content {  
-    order: 2;    
+  order: 2;    
 }
 .blog-wrapper:nth-child(even) .blog-photo {  
-    order: 1;  
+  order: 1;  
 }
-div {
-  @apply max-w-[100vw] py-20 px-6
+
+.blog-title {
+  width: 100%;
 }
-h2 {
-  @apply text-2xl font-semibold mt-1 mb-16
+
+.content-preview :deep(p) {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  margin: 0;
+  text-align: center;
 }
-p {
-  @apply text-lg font-light leading-10 min-h-12 h-auto
-}
-.content-preview {
-  @apply text-sm max-h-6 whitespace-nowrap overflow-hidden text-ellipsis font-bold
-}
+
 .link {
   @apply inline-flex items-center mt-4 pb-1 border border-solid 
-    border-transparent delay-100 ease-in transition-all    
+    border-transparent delay-100 ease-in transition-all;
 }
 
 .link:hover {
-  @apply border-b-slate-600 font-bold
+  @apply border-b-slate-600 font-bold;
 }
 
 .link-light {
-  @apply hover:border-b-slate-500
+  @apply hover:border-b-slate-500;
 }
-/* .blog-photo {
-  @apply order-1 flex-[3] w-full
-} */
+
 .img {
-  @apply block h-full w-full object-cover ml-14
-}
-.no-user:first-child {
-  @apply bg-gray-600 text-white  
+  @apply block w-full object-cover rounded-2xl;
 }
 
 /* start media */
 @media screen and (max-width: 699px) {
   .blog-wrapper {
     min-height: auto !important;
-    padding: 2rem 1rem !important;
-  }
-  div {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  } 
-  h2 {
-    margin-bottom: 1rem !important;
-    font-size: 1.5rem !important;
-    line-height: 1.3 !important;
-  }
-  p {
-    line-height: 1.5 !important;
-    min-height: auto !important;
-    font-size: 1rem !important;
+    padding: 1.5rem 1.25rem !important;
+    gap: 1.5rem !important;
   }
   .blog-content {
     padding: 0 !important;
     flex: auto !important;
   }
   .img {
-    margin-left: 0 !important;
-    max-height: 300px !important;
+    max-height: 280px !important;
     object-fit: cover !important;
   }
 }
 @media screen and (min-width: 700px) {
-  .blog-content{
-    order:1;
-  }
-  div {
-    padding: 0 24px;
-  }
-  h2 {
-    font-size: 40px;   
+  .blog-content {
+    order: 1;
   }
   .blog-wrapper {
-    @apply min-h-[50vh] max-h-[100vh] flex-row    
+    @apply min-h-[380px] flex-row items-center justify-between gap-8 md:gap-12;
   }
   .blog-photo {
     order: 2;
+    flex: 1 1 50%;
   }  
 }
 
-@media screen and (min-width: 800px) {
-  .blog-content{
-    flex:3;
-  }
-  .blog-photo {
-    flex: 4;
-  }
-}
 @media screen and (max-width: 600px) {  
   .blog-photo {
     padding: 0;
@@ -169,24 +156,11 @@ p {
     flex: auto;
     width: 100%;
   }
-  .whitespace-pre-wrap {
-    padding: 0;
-  }
-  .disnone {
-    padding: 0;
-  }
   .blog-photo .img:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
   .blog-title {
     margin-top: 0;
-  }
-  .blog-wrapper {
-    padding: 1.5rem 1rem !important;
-    min-height: auto !important;    
-  }
-  .post-title {
-    font-size: 0.9rem !important;
   }
 }
 </style>

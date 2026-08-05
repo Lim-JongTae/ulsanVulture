@@ -1,5 +1,5 @@
 <template>
-  <div class="home px-4 sm:px-6 py-4">   
+  <div class="home">   
     <blog-post :post="welcomeScreen" />     
     <div class="mt-2 mb-10 sm:mt-10 sm:mb-10">
       <!-- <NuxtImg src="/notice.png" class="mx-auto rounded-2xl shadow-2xl hover:scale-105 transition-all" size="100vw sm:50vw md:600px" /> -->
