@@ -13,9 +13,10 @@
         @click="scrollToTop"
         type="button"
         aria-label="상단으로 이동"
-        class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-11 h-11 bg-gray-600 hover:bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 rounded-md shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer select-none border border-transparent dark:border-gray-200 active:scale-95"
+        class="fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center w-12 h-12 bg-gray-600 hover:bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 rounded-md shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer select-none border border-transparent dark:border-gray-200 active:scale-95 gap-0.5"
       >
-        <span class="text-xs font-extrabold tracking-tight leading-none">^TOP</span>
+        <span class="text-base font-black leading-none translate-y-[2px]">^</span>
+        <span class="text-[10px] font-black tracking-wider leading-none">TOP</span>
       </button>
     </Transition>
   </ClientOnly>
