@@ -7,6 +7,7 @@
     <NuxtLayout>   
       <NuxtPage />        
     </NuxtLayout>
+    <ScrollToTop />
   </div>
 </template>
 <script setup>
