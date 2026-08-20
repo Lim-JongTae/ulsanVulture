@@ -8,16 +8,17 @@
       leave-from-class="opacity-100 translate-y-0 scale-100"
       leave-to-class="opacity-0 translate-y-4 scale-95"
     >
-      <button
+      <UButton
         v-if="isVisible"
         @click="scrollToTop"
         type="button"
         aria-label="상단으로 이동"
-        class="fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center w-11 h-11 bg-gray-600 hover:bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 rounded-md shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer select-none border border-transparent dark:border-gray-200 active:scale-95"
+        size="xs"
+        class="fixed bottom-6 right-6 z-50 flex flex-row items-center justify-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-md shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer select-none border border-transparent active:scale-95 bg-green-600 hover:bg-green-700 text-green-100 dark:bg-green-200 dark:hover:bg-green-300 dark:text-green-900 dark:border-green-300"
       >
-        <span class="text-sm font-black leading-none -mb-0.5">^</span>
-        <span class="text-[10px] font-black tracking-wider leading-none">TOP</span>
-      </button>
+        <UIcon name="i-lucide-rocket" class="w-3 h-3 shrink-0" />
+        <span>TOP</span>
+      </UButton>
     </Transition>
   </ClientOnly>
 </template>
