@@ -19,7 +19,7 @@
         <img src="/parallax/plant.png" id="plant" alt="">
     </section>
   <section class="sec">
-    <h2>당신은 이미 지구시민사회의 일원입니다<span class="spin"></span><a href="https://forms.gle/7xDbQaVxUeuQAEKW9" target="_blank"><button class="btn1">후원하기</button></a></h2>
+    <h2>당신은 이미 지구시민사회의 일원입니다<span class="spin"></span><a href="https://forms.gle/HNW4uoNGWTMTrPtK9" target="_blank"><button class="btn1">후원하기</button></a></h2>
     <ul>
       <li class="title">
         <h3><span>1</span>녹색기후행동에 동참</h3>
